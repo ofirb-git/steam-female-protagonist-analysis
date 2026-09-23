@@ -1,0 +1,46 @@
+code,country,economic_participation_2025,official_economic_2025
+CN,China,72.6,TRUE
+RU,Russia,,FALSE
+US,United States of America,76.2,TRUE
+PL,Poland,71.3,TRUE
+FR,France,72.5,TRUE
+GB,United Kingdom,74.4,TRUE
+AR,Argentina,66.6,TRUE
+DE,Germany,68,TRUE
+AU,Australia,75.4,TRUE
+UA,Ukraine,74.4,TRUE
+BR,Brazil,66.2,TRUE
+TR,Türkiye,51.8,TRUE
+NL,Netherlands,69.8,TRUE
+CA,Canada,75.1,TRUE
+FI,Finland,81.5,TRUE
+JP,Japan,61.3,TRUE
+KR,South Korea,60.8,TRUE
+IT,Italy,59.9,TRUE
+ES,Spain,73.1,TRUE
+CZ,Czechia,64.3,TRUE
+SK,Slovakia,71.1,TRUE
+IN,India,40.7,TRUE
+NO,Norway,77.6,TRUE
+PH,Philippines,79,TRUE
+SE,Sweden,81.8,TRUE
+HU,Hungary,68.8,TRUE
+TH,Thailand,78.6,TRUE
+TW,Taiwan,,FALSE
+DK,Denmark,75.2,TRUE
+PE,Peru,68,TRUE
+RO,Romania,67,TRUE
+HK,Hong Kong,,FALSE
+BY,Belarus,80.5,TRUE
+CL,Chile,65.4,TRUE
+NZ,New Zealand,73.8,TRUE
+MX,Mexico,60.9,TRUE
+CH,Switzerland,72.1,TRUE
+ID,Indonesia,66.8,TRUE
+PT,Portugal,75.7,TRUE
+AT,Austria,71.1,TRUE
+NE,Niger,57.6,TRUE
+BE,Belgium,71.6,TRUE
+SG,Singapore,78.9,TRUE
+VN,Viet Nam,75.9,TRUE
+IE,Ireland,75.5,TRUE

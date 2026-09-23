@@ -1,0 +1,46 @@
+code,country,gggi_2025,official_2025
+CN,China,68.6,TRUE
+RU,Russia,,FALSE
+US,United States of America,75.6,TRUE
+PL,Poland,75,TRUE
+FR,France,76.5,TRUE
+GB,United Kingdom,83.8,TRUE
+AR,Argentina,76.2,TRUE
+DE,Germany,80.3,TRUE
+AU,Australia,79.2,TRUE
+UA,Ukraine,73,TRUE
+BR,Brazil,72,TRUE
+TR,Türkiye,63.3,TRUE
+NL,Netherlands,75.6,TRUE
+CA,Canada,76.7,TRUE
+FI,Finland,87.9,TRUE
+JP,Japan,66.6,TRUE
+KR,South Korea,68.7,TRUE
+IT,Italy,70.4,TRUE
+ES,Spain,79.7,TRUE
+CZ,Czechia,68.6,TRUE
+SK,Slovakia,72.3,TRUE
+IN,India,64.4,TRUE
+NO,Norway,86.3,TRUE
+PH,Philippines,78.1,TRUE
+SE,Sweden,81.7,TRUE
+HU,Hungary,68.4,TRUE
+TH,Thailand,72.8,TRUE
+TW,Taiwan,,FALSE
+DK,Denmark,79.1,TRUE
+PE,Peru,73.5,TRUE
+RO,Romania,69.7,TRUE
+HK,Hong Kong,,FALSE
+BY,Belarus,73.6,TRUE
+CL,Chile,77.7,TRUE
+NZ,New Zealand,82.7,TRUE
+MX,Mexico,77.6,TRUE
+CH,Switzerland,78.5,TRUE
+ID,Indonesia,69.2,TRUE
+PT,Portugal,76.7,TRUE
+AT,Austria,73.5,TRUE
+NE,Niger,61.3,TRUE
+BE,Belgium,77.3,TRUE
+SG,Singapore,74.8,TRUE
+VN,Viet Nam,71.3,TRUE
+IE,Ireland,80.1,TRUE
