@@ -1,6 +1,6 @@
 # Female Protagonist Tags, Estimated Revenue, and Geographic Markets on Steam
 
-This repository contains the R code and final research outputs for an undergraduate management seminar by Ophir Barkai at Tel Aviv University.
+This repository contains the R code and final research outputs for an undergraduate management seminar by Ofir Barkay at Tel Aviv University.
 
 The study examines whether the Steam `Female Protagonist` tag is associated with:
 
@@ -12,6 +12,7 @@ The analysis uses OLS models with HC3 heteroskedasticity-robust standard errors.
 ## Data sources
 
 The initial Steam and Gamalytic data were assembled by Evyatar Segal. They are not redistributed in this repository.
+The cleaned master dataset, Clean_games_data_feb_2026_v2.csv, is not part of the original Kaggle dataset. It was created by Ofir Barkay for the present study using the scripts in this repository. The processing included data validation and cleaning, removal of non-game products, construction of the research variables, and preparation of the analytical samples.
 
 - Kaggle dataset: <https://www.kaggle.com/datasets/evyatarbensegal/steam-full-market-dataset>
 - Original data-collection repository: <https://github.com/EvyatarSegal/Scrape_Steam_WebAPI>
@@ -41,6 +42,8 @@ Create the following folders locally at the repository root:
 data/raw/
 data/processed/
 ```
+
+The files placed in data/raw/ serve as inputs to the cleaning pipeline. Running R/01_build_master_dataset.R and R/02_classify_products_and_genres.R creates the study-specific cleaned master file in data/processed/.
 
 Place the required source files in `data/raw/` using these filenames:
 
