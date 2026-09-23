@@ -1,0 +1,22 @@
+Variable,H2_M1,H2_M3,H2_M4,H2_M5
+Female Protagonist tag,"-0.650***
+(0.072)","-0.466***
+(0.073)","-0.013
+(0.066)","-0.576***
+(0.070)"
+Free to Play,"","0.418***
+(0.069)","0.272***
+(0.067)","0.404***
+(0.067)"
+Early Access,"","0.385***
+(0.080)","0.313***
+(0.075)","0.453***
+(0.077)"
+Number of supported languages,"","","-0.009*
+(0.004)",""
+Genre controls,No,Yes,Yes,Yes
+Release-period fixed effects,No,Yes,Yes,Yes
+Language indicators,No,No,Yes,No
+Required coverage rate,100%,100%,100%,At least 80%
+Observations,23039,23039,23039,26071
+Adjusted R-squared,0.003,0.039,0.176,0.048

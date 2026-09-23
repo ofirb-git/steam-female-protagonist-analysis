@@ -1,0 +1,15 @@
+Variable,H2_M3,H2_M9
+Female Protagonist tag,"-0.466***
+(0.073)","-0.282***
+(0.060)"
+Free to Play,"0.418***
+(0.069)","0.304***
+(0.055)"
+Early Access,"0.385***
+(0.080)","0.452***
+(0.065)"
+Genre controls,Yes,Yes
+Release-period fixed effects,Yes,Yes
+Russia assigned its 2021 score,No,Yes
+Observations,23039,31963
+Adjusted R-squared,0.039,0.031
