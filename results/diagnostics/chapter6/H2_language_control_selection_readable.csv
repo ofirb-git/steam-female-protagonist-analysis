@@ -1,0 +1,15 @@
+variable,prevalence,selected
+lang_English,1.000,FALSE
+lang_French,0.409,TRUE
+lang_German,0.411,TRUE
+lang_Italian,0.285,TRUE
+lang_Spanish,0.402,TRUE
+lang_Simplified_Chinese,0.356,TRUE
+lang_Traditional_Chinese,0.166,FALSE
+lang_Korean,0.216,TRUE
+lang_Russian,0.271,TRUE
+lang_Dutch,0.076,FALSE
+lang_Japanese,0.358,TRUE
+lang_Polish,0.168,FALSE
+lang_Portuguese,0.282,TRUE
+lang_Turkish,0.083,FALSE

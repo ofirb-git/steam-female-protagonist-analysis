@@ -278,6 +278,18 @@ read_h2 <- function(path, expected_n, label) {
     set(x, j = nm, value = as_binary(x[[nm]], paste0(label, ":", nm)))
   }
 
+  # The current H2 pipeline may already preserve the lang_* columns created in
+  # the master. Remove any existing copies before joining the canonical values
+  # from the master; otherwise merge() adds .x/.y suffixes and the expected
+  # lang_* names disappear.
+  columns_rejoined_from_master <- intersect(
+    c("release_period", language_flags),
+    names(x)
+  )
+  if (length(columns_rejoined_from_master)) {
+    x[, (columns_rejoined_from_master) := NULL]
+  }
+
   language_data <- master[, c("appid", "release_period", language_flags), with = FALSE]
   x <- merge(x, language_data, by = "appid", all.x = TRUE, all.y = FALSE, sort = FALSE)
   if (nrow(x) != expected_n || x[, anyNA(appid)]) stop(label, ": invalid language join.")

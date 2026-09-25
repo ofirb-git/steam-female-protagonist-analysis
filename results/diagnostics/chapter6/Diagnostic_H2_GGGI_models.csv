@@ -1,0 +1,28 @@
+Statistic,H2_M1,H2_M2,H2_M3,H2_M4,H2_M5,H2_M9
+Female Protagonist tag,"-0.650***
+(0.072)","-0.609***
+(0.073)","-0.466***
+(0.073)","-0.013
+(0.066)","-0.576***
+(0.070)","-0.282***
+(0.060)"
+Free to Play,"","0.262***
+(0.066)","0.418***
+(0.069)","0.272***
+(0.067)","0.404***
+(0.067)","0.304***
+(0.055)"
+Early Access,"","0.256**
+(0.078)","0.385***
+(0.080)","0.313***
+(0.075)","0.453***
+(0.077)","0.452***
+(0.065)"
+Number of supported languages,"","","","-0.009*
+(0.004)","",""
+Genre controls,No,No,Yes,Yes,Yes,Yes
+Release-period fixed effects,No,No,Yes,Yes,Yes,Yes
+Language indicators,No,No,No,Yes,No,No
+Country coverage,100%,100%,100%,100%,>=80%,Russia sensitivity
+Observations,23039,23039,23039,23039,26071,31963
+Adjusted R-squared,0.003,0.004,0.039,0.176,0.048,0.031

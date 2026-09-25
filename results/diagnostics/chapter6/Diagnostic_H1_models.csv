@@ -1,0 +1,23 @@
+Statistic,H1_M1,H1_M2,H1_M3,H1_M4,H1_M5
+Female Protagonist tag,"1.236***
+(0.038)","1.269***
+(0.038)","1.213***
+(0.036)","1.078***
+(0.059)","1.230***
+(0.036)"
+Free to Play,"","1.821***
+(0.087)","1.701***
+(0.083)","2.080***
+(0.233)",""
+Early Access,"","0.201***
+(0.038)","0.183***
+(0.037)","0.092
+(0.051)","0.203***
+(0.037)"
+Current price,"","","","0.067**
+(0.024)",""
+Genre controls,No,No,Yes,Yes,Yes
+Release-period fixed effects,No,No,Yes,Yes,Yes
+Paid-only sample,No,No,No,No,Yes
+Observations,79891,79891,79852,79852,77688
+Adjusted R-squared,0.012,0.020,0.165,0.233,0.162

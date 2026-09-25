@@ -1,0 +1,9 @@
+Sample,Value,Short Explanation
+Full dataset,"139,059",Total number of games in the merged dataset
+Games with tag data,"138,961",Games with available tag information
+H1 sample,"79,891",Positive estimated revenue and tag data
+Female Protagonist in H1,"8,458 (10.59%)",Games tagged as Female Protagonist within H1
+No Female Protagonist tag in H1,"71,433 (89.41%)",H1 games without the Female Protagonist tag
+H2 candidate sample,"33,766",Games with country-share data and tag data
+H2 main sample,"23,053",Full official GGGI 2025 coverage
+H2 robustness sample,"26,088",At least 80% official GGGI 2025 coverage
