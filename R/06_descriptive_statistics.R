@@ -270,50 +270,100 @@ render_table1 <- function() {
     collapse = ""
   )
   paste0(
-    "<section><div class='title'>Table 1: Analytical Samples and Data Availability",
+    "<section class='table1-section'><div class='title'>Table 1: Analytical Samples and Data Availability",
     "<div class='subtitle'>Sample construction for the full game dataset and the H1/H2 analytical samples</div></div>",
     "<table><thead><tr><th>Sample</th><th>Value</th><th>Short Explanation</th></tr></thead><tbody>",
-    rows, "</tbody></table>",
-    "<p class='note'><strong>Source:</strong> Steam Web API, Gamalytic, and author's calculations.<br>",
-    "<strong>Note:</strong> The full dataset contains 98 games without tag data.</p></section>"
+    rows, "</tbody></table></section>"
   )
 }
 
 table2_stat_labels <- c("Mean", "St. Dev.", "Min", "P25", "Median", "P75", "Max")
 render_table2 <- function() {
-  rows <- character()
-  for (i in seq_len(nrow(table2))) {
-    label <- table2$Variable[[i]]
-    for (j in seq_along(table2_stat_labels)) {
-      stat <- table2_stat_labels[[j]]
-      value <- table2[[stat]][[i]]
-      if (label %in% c("Estimated Revenue (USD)", "Current Price (USD)", "Ln(Revenue)")) {
-        shown <- fmt2(value)
-      } else if (stat %in% c("Mean", "St. Dev.")) {
-        shown <- formatC(value, format = "f", digits = 3)
-      } else {
-        shown <- formatC(value, format = "f", digits = 0)
-      }
-      first_cell <- if (j == 1L) {
-        paste0("<td class='group' rowspan='7'>", html_escape(label), "</td>")
-      } else ""
-      rows <- c(rows, paste0(
-        "<tr>", first_cell, "<td>", html_escape(stat),
-        "</td><td class='value'>", shown, "</td></tr>"
-      ))
-    }
+  continuous_variables <- c(
+    "Estimated Revenue (USD)", "Ln(Revenue)", "Current Price (USD)"
+  )
+  continuous_rows <- match(continuous_variables, table2$Variable)
+  if (anyNA(continuous_rows)) stop("A continuous Table 2 variable could not be found.")
+  rows_a <- ""
+  for (stat in table2_stat_labels) {
+    shown <- vapply(continuous_rows, function(i) fmt2(table2[[stat]][[i]]), character(1))
+    rows_a <- paste0(
+      rows_a, "<tr><td class='row-label'>", html_escape(stat), "</td>",
+      "<td class='value'>", shown[[1]], "</td>",
+      "<td class='value'>", shown[[2]], "</td>",
+      "<td class='value'>", shown[[3]], "</td></tr>"
+    )
   }
+
+  characteristic_labels <- c("Female Protagonist", "Free to Play", "Early Access")
+  characteristic_shares <- 100 * c(
+    mean(h1$tag_female_protagonist == 1L),
+    mean(h1$is_free == 1L),
+    mean(h1$is_early_access == 1L)
+  )
+  rows_b <- paste0(
+    "<tr><td class='row-label'>", characteristic_labels,
+    "</td><td class='value'>",
+    formatC(characteristic_shares, format = "f", digits = 1),
+    "%</td></tr>",
+    collapse = ""
+  )
+
   paste0(
     "<section><div class='title'>Table 2: Descriptive Statistics - H1 Sample",
     "<div class='subtitle'>Games with positive estimated revenue and available tag data (N = 79,891)</div></div>",
-    "<table><thead><tr><th>Variable</th><th>Statistic</th><th>Value</th></tr></thead><tbody>",
-    paste0(rows, collapse = ""), "</tbody></table>",
-    "<p class='note'><strong>Source:</strong> Steam Web API, Gamalytic, and author's calculations.<br>",
-    "<strong>Note:</strong> Binary variables are coded 0/1, so their means can be interpreted as proportions.</p></section>"
+    "<table class='compact-table2'><tbody>",
+    "<tr class='panel-title'><td colspan='4'>Panel A: Revenue and Price</td></tr>",
+    "<tr class='panel-header'><th>Statistic</th><th>Estimated Revenue (USD)</th>",
+    "<th>Ln(Revenue)</th><th>Current Price (USD)</th></tr>",
+    rows_a, "</tbody></table>",
+    "<table class='compact-binary'><tbody>",
+    "<tr class='panel-title'><td colspan='2'>Panel B: Share of Games with Selected Characteristics</td></tr>",
+    "<tr class='panel-header'><th>Characteristic</th><th>Share of Sample</th></tr>",
+    rows_b, "</tbody></table></section>"
   )
 }
 
-render_h2_table <- function(tab, number, title, outcome, note) {
+render_h2_table <- function(tab, number, title, outcome, note, compact = FALSE) {
+  if (compact) {
+    stat_cols <- c("N", "Mean", "St. Dev.", "Min", "Q1", "Median", "Q3", "Max")
+    panel_specs <- list(
+      list(title = "Panel A: Main H2 Sample", rows = 1:3),
+      list(title = "Panel B: 80% Coverage Sample", rows = 4:6)
+    )
+    rows <- paste0(
+      "<tr class='outcome'><td colspan='4'>Outcome variable: ",
+      html_escape(outcome), "</td></tr>"
+    )
+    for (panel in panel_specs) {
+      panel_rows <- panel$rows
+      rows <- paste0(
+        rows,
+        "<tr class='panel-title'><td colspan='4'>", panel$title, "</td></tr>",
+        "<tr class='panel-header'><th>Statistic</th><th>All</th>",
+        "<th>Female Protagonist</th><th>No Female Protagonist tag</th></tr>"
+      )
+      for (stat in stat_cols) {
+        if (stat == "N") {
+          shown <- vapply(tab$N[panel_rows], fmt0, character(1))
+        } else {
+          shown <- vapply(tab[[stat]][panel_rows], fmt2, character(1))
+        }
+        rows <- paste0(
+          rows, "<tr><td class='row-label'>", html_escape(stat), "</td>",
+          "<td class='value'>", shown[[1]], "</td>",
+          "<td class='value'>", shown[[2]], "</td>",
+          "<td class='value'>", shown[[3]], "</td></tr>"
+        )
+      }
+    }
+    return(paste0(
+      "<section><div class='title'>Table ", number, ": ", html_escape(title),
+      "<div class='subtitle'>H2 Sample and 80% Coverage</div></div>",
+      "<table class='compact-h2'><tbody>", rows, "</tbody></table></section>"
+    ))
+  }
+
   stat_cols <- c("Mean", "St. Dev.", "Min", "Q1", "Median", "Q3", "Max")
   rows <- paste0(
     "<tr class='outcome'><td colspan='3'>Outcome variable: ", html_escape(outcome), "</td></tr>"
@@ -345,6 +395,7 @@ html <- paste0(
   "<title>Chapter 4 Descriptive Tables</title><style>",
   "*{box-sizing:border-box}body{font-family:Cambria,Georgia,'Times New Roman',serif;color:#111;background:#f4f7fb;max-width:900px;margin:16px auto;line-height:1.15}",
   "section{width:860px;max-width:100%;margin:0 auto 24px;background:#fff;border:1px solid #bfd2ed;border-radius:12px;overflow:hidden;box-shadow:0 3px 10px rgba(7,59,130,.16);page-break-after:always}",
+  ".table1-section{width:470px;max-width:calc(100vw - 32px)}",
   ".title{font-size:22px;color:#fff;background:#073b82;padding:12px;text-align:center;font-weight:700}",
   ".subtitle{font-size:16px;font-style:italic;font-weight:400;margin-top:5px}",
   "table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:15px}",
@@ -353,6 +404,20 @@ html <- paste0(
   "tbody tr:nth-child(even) td{background:#edf4fd}tbody tr:nth-child(odd) td{background:#fff}",
   "td.row-label{text-align:left;font-weight:700}td.group{font-weight:700}td.value{color:#0b43c6;font-weight:700}",
   "tr.outcome td{background:#dceafe!important;color:#092f67;font-weight:700}",
+  "tr.panel-title td{background:#c9ddf8!important;color:#092f67;font-weight:700;padding:7px}",
+  "tr.panel-header th{padding:7px 5px}",
+  "table.compact-h2 td{padding:5px 8px}",
+  "table.compact-h2 th:first-child,table.compact-h2 td:first-child{width:22%}",
+  "table.compact-h2 th:nth-child(2),table.compact-h2 td:nth-child(2){width:19%}",
+  "table.compact-h2 th:nth-child(3),table.compact-h2 td:nth-child(3){width:27%}",
+  "table.compact-h2 th:nth-child(4),table.compact-h2 td:nth-child(4){width:32%}",
+  "table.compact-table2 td{padding:5px 8px}",
+  "table.compact-table2 th:first-child,table.compact-table2 td:first-child{width:18%}",
+  "table.compact-table2 th:nth-child(2),table.compact-table2 td:nth-child(2){width:32%}",
+  "table.compact-table2 th:nth-child(3),table.compact-table2 td:nth-child(3){width:23%}",
+  "table.compact-table2 th:nth-child(4),table.compact-table2 td:nth-child(4){width:27%}",
+  "table.compact-binary th:first-child,table.compact-binary td:first-child{width:65%}",
+  "table.compact-binary th:nth-child(2),table.compact-binary td:nth-child(2){width:35%}",
   ".note{font-size:13px;line-height:1.25;padding:8px 14px 10px;margin:0;text-align:left}.note strong{color:#0747a6}",
   "</style></head><body>",
   render_table1(), render_table2(),
@@ -361,7 +426,8 @@ html <- paste0(
     paste0(
       "GGGI scores are presented on a 0-100 scale. The main sample includes only games with full official coverage ",
       "of the top reported countries. The robustness sample includes games with at least 80% coverage of the top reported countries."
-    )
+    ),
+    compact = TRUE
   ),
   render_h2_table(
     table4, "4", "Economic Participation and Opportunity Descriptive Statistics",
@@ -369,7 +435,8 @@ html <- paste0(
     paste0(
       "Economic Participation and Opportunity scores are presented on a 0-100 scale. The main sample includes only games ",
       "with full official coverage of the top reported countries. The robustness sample includes games with at least 80% coverage."
-    )
+    ),
+    compact = TRUE
   ),
   "</body></html>"
 )
@@ -382,13 +449,17 @@ table_png_files <- c(
   "Table_3_H2_Weighted_GGGI.png",
   "Table_4_H2_Economic_Participation.png"
 )
+# Table 1 is intentionally rendered with the original narrow viewport so that
+# it remains a tall, portrait-oriented table. Tables 2-4 use the wider viewport
+# required by their compact multi-column layouts.
+table_vwidths <- c(520L, 1100L, 1100L, 1100L)
 html_url <- paste0("file:///", normalizePath(html_file, winslash = "/"))
 for (i in seq_along(table_png_files)) {
   webshot2::webshot(
     url = html_url,
     file = file.path(figure_dir, table_png_files[[i]]),
     selector = paste0("section:nth-of-type(", i, ")"),
-    zoom = 2, vwidth = 1100, delay = 0.25
+    zoom = 2, vwidth = table_vwidths[[i]], delay = 0.25
   )
 }
 
