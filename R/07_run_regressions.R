@@ -3,13 +3,12 @@
 # ==============================================================================
 # This script:
 # 1. Audits all estimation samples before fitting any model.
-# 2. Estimates the pre-specified H1 and H2 models by OLS with HC3 standard errors.
+# 2. Estimates the H1 and H2 models by OLS with HC3 standard errors.
 # 3. Adds language flags to the existing H2 samples by appid without rebuilding GGGI.
 # 4. Groups release years through 2008 into one category. The early H2 years
 #    contain very few observations (including one in 2003), so this preserves
 #    all observations and keeps HC3 leverage well below 1.
-# 5. Selects language controls before inspecting regression results, using only
-#    their prevalence in the cleaned H2 main sample (20%-80%).
+# 5. Includes all nonconstant language indicators in the cleaned H2 main sample.
 # 6. Creates a separate Russia sensitivity sample using Russia's last official
 #    WEF GGGI score (2021: 0.708, or 70.8 on the 0-100 scale; Table 1.1,
 #    report page 10). Taiwan and Hong Kong remain
@@ -357,22 +356,21 @@ h2_exclusions <- rbindlist(
 fwrite(h2_exclusions, file.path(output_dir, "H2_excluded_observations.csv"), na = "")
 
 # ------------------------------------------------------------------------------
-# 5. Pre-specified language-control rule
+# 5. Language-control selection
 # ------------------------------------------------------------------------------
-# The rule uses only predictor prevalence, before any regression is fitted:
-# retain a language flag when 20%-80% of the H2 main analytic sample has value 1.
-# This removes constant/nearly universal English and low-prevalence flags while
-# avoiding outcome-based variable selection.
+# Retain every language indicator with prevalence strictly between 0 and 1 in
+# the H2 main analytic sample. This excludes constant indicators such as English
+# and avoids selecting controls based on the regression outcomes.
 
 language_prevalence <- data.table(
   variable = language_flags,
   prevalence = vapply(language_flags, function(v) mean(h2_main[[v]] == 1L), numeric(1))
 )
-language_prevalence[, selected := prevalence >= 0.20 & prevalence <= 0.80]
+language_prevalence[, selected := prevalence > 0 & prevalence < 1]
 selected_language_flags <- language_prevalence[selected == TRUE, variable]
 
 if (!length(selected_language_flags)) {
-  stop("The pre-specified language rule selected no variables.")
+  stop("The nonconstant-language rule selected no variables.")
 }
 if ("lang_English" %in% selected_language_flags) {
   stop("English is constant in H2 and must not be selected.")
@@ -383,7 +381,7 @@ fwrite(
   file.path(output_dir, "H2_language_control_selection.csv"),
   na = ""
 )
-note("Selected language controls (20%-80% prevalence): ",
+note("Selected nonconstant language controls: ",
      paste(selected_language_flags, collapse = ", "))
 
 # ------------------------------------------------------------------------------
@@ -512,7 +510,7 @@ results$H2_M3 <- fit_hc3(
 )
 results$H2_M4 <- fit_hc3(
   "H2_M4", make_formula("weighted_gggi_2025", rhs_language), h2_main,
-  "H2", "Language extension selected by pre-specified prevalence rule"
+  "H2", "Language extension with all nonconstant language indicators"
 )
 results$H2_M5 <- fit_hc3(
   "H2_M5", make_formula("weighted_gggi_2025", rhs_core), h2_80,
@@ -973,7 +971,7 @@ manifest <- data.table(
     "N, R-squared, adjusted R-squared, leverage and model formulas",
     "Compact coefficient table for inspection",
     "Sample sizes used by each analysis family",
-    "Pre-outcome language-control selection rule and prevalence",
+    "Language-control selection based on nonconstant indicators and prevalence",
     "H2 rows excluded for missing core regression variables",
     "Documented assumptions for the separate Russia sensitivity",
     "Diagnostic HTML tables for model verification",

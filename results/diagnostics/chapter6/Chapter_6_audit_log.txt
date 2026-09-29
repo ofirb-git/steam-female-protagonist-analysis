@@ -1,4 +1,4 @@
-Chapter 6 regression audit - 2026-09-24 00:28:51
+Chapter 6 regression audit - 2026-09-29 20:26:49
 Source files are read only; GGGI values in existing H2 files are preserved.
 Master: C:/Users/Ofir/OneDrive/מסמכים/GitHub/steam-female-protagonist-analysis/data/processed/Clean_games_data_feb_2026_v2.csv
 H2 main: C:/Users/Ofir/OneDrive/מסמכים/GitHub/steam-female-protagonist-analysis/data/processed/H2_main_GGGI_2025_with_Economic.csv
@@ -9,7 +9,7 @@ H1 core plus price complete cases: 79852
 H1 paid-only complete cases: 77688
 H2 main: raw=23053; analytic=23039; missing core=14; early years pooled=164
 H2 80%: raw=26088; analytic=26071; missing core=17; early years pooled=201
-Selected language controls (20%-80% prevalence): lang_French, lang_German, lang_Italian, lang_Spanish, lang_Simplified_Chinese, lang_Korean, lang_Russian, lang_Japanese, lang_Portuguese
+Selected nonconstant language controls: lang_French, lang_German, lang_Italian, lang_Spanish, lang_Simplified_Chinese, lang_Traditional_Chinese, lang_Korean, lang_Russian, lang_Dutch, lang_Japanese, lang_Polish, lang_Portuguese, lang_Turkish
 Russia-sensitivity analytic sample: 31963
 Russia source: WEF GGGR 2021, Table 1.1, report/PDF page 10, score 0.708.
 Diagnostic econometric tables created in HTML and CSV formats.

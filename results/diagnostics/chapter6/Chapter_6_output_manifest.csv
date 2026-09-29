@@ -4,7 +4,7 @@ Chapter_6_all_coefficients_HC3.csv,"All coefficients, HC3 standard errors, p-val
 Chapter_6_model_diagnostics.csv,"N, R-squared, adjusted R-squared, leverage and model formulas"
 Chapter_6_focused_regression_table.csv,Compact coefficient table for inspection
 Chapter_6_sample_audit.csv,Sample sizes used by each analysis family
-H2_language_control_selection.csv,Pre-outcome language-control selection rule and prevalence
+H2_language_control_selection.csv,Language-control selection based on nonconstant indicators and prevalence
 H2_excluded_observations.csv,H2 rows excluded for missing core regression variables
 H2_Russia_sensitivity_method.csv,Documented assumptions for the separate Russia sensitivity
 Chapter_6_diagnostic_tables.html,Diagnostic HTML tables for model verification
